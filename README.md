@@ -1,6 +1,6 @@
 # Juan Carlos Nieves | Sitio personal
 
-Sitio estático para GitHub Pages construido con HTML, CSS y JavaScript puro.
+Sitio estático para GitHub Pages construido con HTML, CSS y JavaScript puro. La estética actual usa una composición minimalista inspirada en principios de diseño de producto premium: titulares grandes, espacios amplios, contraste puntual y animaciones suaves.
 
 ## Publicación
 
@@ -49,18 +49,18 @@ Duplica uno de los bloques:
     <h3>Título del proyecto</h3>
     <p>Descripción breve del proyecto.</p>
   </div>
-  <span class="project-state">Próximamente</span>
+  <span class="project-arrow" aria-hidden="true">→</span>
 </li>
 ```
 
-Cuando exista un caso completo, puedes reemplazar `Próximamente` por un enlace simple.
+Cuando exista un caso completo, puedes reemplazar la flecha por un enlace simple o envolver el contenido del proyecto en un enlace.
 
 ## Ajustes visuales
 
 Los colores principales están en `styles.css`, dentro de `:root`. El color de acento actual es:
 
 ```css
---accent: #113d46;
+--accent: #0a4856;
 ```
 
 El sitio respeta `prefers-reduced-motion`, tiene navegación por teclado, enlaces externos seguros y año automático en el footer.
