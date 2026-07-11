@@ -76,12 +76,3 @@ if ("IntersectionObserver" in window) {
   document.querySelectorAll(".reveal").forEach((element) => element.classList.add("is-visible"));
   navLinks[0]?.classList.add("is-active");
 }
-
-/*
-  Para agregar proyectos:
-  duplica un <article class="project-item"> en index.html dentro de [data-projects],
-  cambia la etiqueta, título, descripción y reemplaza href="#" por el enlace real.
-*/
-document.querySelectorAll('.project-link[href="#"]').forEach((link) => {
-  link.addEventListener("click", (event) => event.preventDefault());
-});

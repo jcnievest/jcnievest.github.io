@@ -27,7 +27,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
@@ -91,7 +91,7 @@
           <div class="hero-actions" aria-label="Acciones principales">
             <a class="button button-primary" href="#perfil">Conocer mi perfil</a>
             <a
-              class="button button-secondary"
+              class="text-link"
               href="https://www.linkedin.com/in/juancarlosnievestorres"
               target="_blank"
               rel="noopener noreferrer"
@@ -101,18 +101,9 @@
           </div>
         </div>
 
-        <div class="portrait-shell reveal" aria-label="Espacio reservado para fotografía profesional">
-          <!--
-            Reemplaza este bloque cuando tengas una fotografía profesional:
-            1. Guarda la imagen optimizada en este directorio, por ejemplo: portrait.jpg
-            2. Sustituye el contenido de .portrait-placeholder por:
-               <img src="portrait.jpg" alt="Juan Carlos Nieves Torres" />
-          -->
-          <div class="portrait-placeholder" role="img" aria-label="Composición visual neutra temporal">
-            <span class="portrait-mark">JCN</span>
-            <span class="portrait-line"></span>
-            <span class="portrait-caption">Transformación digital e innovación pública</span>
-          </div>
+        <div class="hero-signature reveal" aria-hidden="true">
+          <span></span>
+          <p>Juan Carlos Nieves Torres</p>
         </div>
       </section>
 
@@ -130,15 +121,15 @@
           <div class="principles" aria-label="Conceptos principales">
             <article>
               <h3>Transformación digital</h3>
-              <p>Diseño de soluciones que simplifican procesos y mejoran la experiencia de las personas.</p>
+              <p>Soluciones que simplifican procesos y mejoran la experiencia de las personas.</p>
             </article>
             <article>
               <h3>Innovación pública</h3>
-              <p>Aplicación de tecnología y criterio institucional para modernizar servicios con sentido práctico.</p>
+              <p>Criterio institucional para modernizar servicios con sentido práctico.</p>
             </article>
             <article>
               <h3>Dirección y ejecución</h3>
-              <p>Coordinación de equipos, prioridades y decisiones para convertir estrategia en resultados.</p>
+              <p>Coordinación de prioridades y decisiones para convertir estrategia en resultados.</p>
             </article>
           </div>
         </div>
@@ -160,28 +151,28 @@
             <span class="experience-number">01</span>
             <div>
               <h3>Gobierno digital</h3>
-              <p>Modernización de trámites, canales y servicios con enfoque en accesibilidad, continuidad y utilidad.</p>
+              <p>Modernización de trámites, canales y servicios.</p>
             </div>
           </li>
           <li>
             <span class="experience-number">02</span>
             <div>
               <h3>Identidad y firma electrónica</h3>
-              <p>Soluciones para fortalecer confianza, autenticidad y seguridad en procesos institucionales.</p>
+              <p>Confianza, autenticidad y seguridad institucional.</p>
             </div>
           </li>
           <li>
             <span class="experience-number">03</span>
             <div>
               <h3>Interoperabilidad y servicios digitales</h3>
-              <p>Integración de sistemas, información y flujos para reducir fricción operativa.</p>
+              <p>Integración de sistemas e información para reducir fricción.</p>
             </div>
           </li>
           <li>
             <span class="experience-number">04</span>
             <div>
               <h3>Dirección de proyectos tecnológicos</h3>
-              <p>Planeación, ejecución y seguimiento de iniciativas con impacto operativo y visión estratégica.</p>
+              <p>Planeación y ejecución con visión estratégica.</p>
             </div>
           </li>
         </ol>
@@ -192,32 +183,44 @@
           <p class="section-kicker">Proyectos e iniciativas</p>
           <h2 id="projects-title">Una selección preparada para crecer.</h2>
         </div>
-        <div class="projects-grid reveal" data-projects>
-          <article class="project-item">
-            <p class="project-tag">Servicios digitales</p>
-            <h3>Servicios públicos digitales</h3>
-            <p>Diseño y modernización de experiencias digitales para trámites, atención y operación institucional.</p>
-            <a class="project-link" href="#" aria-disabled="true">Enlace futuro</a>
-          </article>
-          <article class="project-item">
-            <p class="project-tag">Confianza digital</p>
-            <h3>Identidad y firma electrónica</h3>
-            <p>Iniciativas orientadas a autenticación, validez, trazabilidad y seguridad documental.</p>
-            <a class="project-link" href="#" aria-disabled="true">Enlace futuro</a>
-          </article>
-          <article class="project-item">
-            <p class="project-tag">Gestión institucional</p>
-            <h3>Plataformas de gestión documental</h3>
-            <p>Herramientas para ordenar información, procesos y colaboración en entornos públicos.</p>
-            <a class="project-link" href="#" aria-disabled="true">Enlace futuro</a>
-          </article>
-          <article class="project-item">
-            <p class="project-tag">Innovación y conectividad</p>
-            <h3>Estrategias de innovación y conectividad</h3>
-            <p>Planeación de rutas tecnológicas para habilitar servicios, capacidades y coordinación.</p>
-            <a class="project-link" href="#" aria-disabled="true">Enlace futuro</a>
-          </article>
-        </div>
+        <ol class="projects-grid reveal" data-projects>
+          <li class="project-item">
+            <span class="project-number">01</span>
+            <div>
+              <p class="project-tag">Servicios digitales</p>
+              <h3>Servicios públicos digitales</h3>
+              <p>Modernización de experiencias para trámites, atención y operación institucional.</p>
+            </div>
+            <span class="project-state">Próximamente</span>
+          </li>
+          <li class="project-item">
+            <span class="project-number">02</span>
+            <div>
+              <p class="project-tag">Confianza digital</p>
+              <h3>Identidad y firma electrónica</h3>
+              <p>Autenticación, validez, trazabilidad y seguridad documental.</p>
+            </div>
+            <span class="project-state">Próximamente</span>
+          </li>
+          <li class="project-item">
+            <span class="project-number">03</span>
+            <div>
+              <p class="project-tag">Gestión institucional</p>
+              <h3>Plataformas de gestión documental</h3>
+              <p>Herramientas para ordenar información, procesos y colaboración.</p>
+            </div>
+            <span class="project-state">Próximamente</span>
+          </li>
+          <li class="project-item">
+            <span class="project-number">04</span>
+            <div>
+              <p class="project-tag">Innovación y conectividad</p>
+              <h3>Estrategias de innovación y conectividad</h3>
+              <p>Rutas tecnológicas para habilitar servicios, capacidades y coordinación.</p>
+            </div>
+            <span class="project-state">Próximamente</span>
+          </li>
+        </ol>
       </section>
 
       <section class="manifesto section-panel reveal" aria-labelledby="manifesto-title">
@@ -239,10 +242,10 @@
             modernización institucional.
           </p>
           <div class="contact-links">
+            <a class="contact-email" href="mailto:jc.nieves.t@gmail.com">jc.nieves.t@gmail.com</a>
             <a href="https://www.linkedin.com/in/juancarlosnievestorres" target="_blank" rel="noopener noreferrer">
               LinkedIn
             </a>
-            <a href="mailto:jc.nieves.t@gmail.com">jc.nieves.t@gmail.com</a>
           </div>
         </div>
       </section>

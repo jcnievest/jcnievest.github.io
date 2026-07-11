@@ -31,46 +31,36 @@ La mayor parte del contenido está en `index.html`, organizado por secciones:
 
 Puedes cambiar títulos, párrafos y enlaces directamente en el HTML sin tocar el CSS.
 
-## Cambiar la fotografía
-
-En `index.html`, busca el bloque `.portrait-placeholder` dentro del hero. Ahí hay un comentario con los pasos:
-
-1. Optimiza la fotografía y guárdala junto a los archivos del sitio, por ejemplo como `portrait.jpg`.
-2. Reemplaza el contenido de `.portrait-placeholder` por:
-
-```html
-<img src="portrait.jpg" alt="Juan Carlos Nieves Torres" />
-```
-
-El CSS ya incluye las reglas para que la imagen cubra el contenedor de forma elegante.
-
 ## Agregar proyectos
 
 En `index.html`, busca:
 
 ```html
-<div class="projects-grid reveal" data-projects>
+<ol class="projects-grid reveal" data-projects>
 ```
 
 Duplica uno de los bloques:
 
 ```html
-<article class="project-item">
-  <p class="project-tag">Etiqueta</p>
-  <h3>Título del proyecto</h3>
-  <p>Descripción breve del proyecto.</p>
-  <a class="project-link" href="https://ejemplo.com">Ver proyecto</a>
-</article>
+<li class="project-item">
+  <span class="project-number">05</span>
+  <div>
+    <p class="project-tag">Categoría</p>
+    <h3>Título del proyecto</h3>
+    <p>Descripción breve del proyecto.</p>
+  </div>
+  <span class="project-state">Próximamente</span>
+</li>
 ```
 
-Si un proyecto todavía no tiene enlace, deja `href="#"`; `script.js` evita que ese enlace navegue.
+Cuando exista un caso completo, puedes reemplazar `Próximamente` por un enlace simple.
 
 ## Ajustes visuales
 
 Los colores principales están en `styles.css`, dentro de `:root`. El color de acento actual es:
 
 ```css
---accent: #0d4b5a;
+--accent: #113d46;
 ```
 
 El sitio respeta `prefers-reduced-motion`, tiene navegación por teclado, enlaces externos seguros y año automático en el footer.
