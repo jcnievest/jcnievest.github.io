@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="es-MX" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#fbf4f1">
+  <meta name="description" content="Invitación a los XV años de Ana Isabela — 4 de octubre de 2026.">
+  <title>Mis XV años — Ana Isabela</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script>document.documentElement.classList.replace('no-js', 'js');</script>
+</head>
+<body>
+  <a class="skip-link" href="#contenido">Ir al contenido</a>
+
+  <section class="opening" id="opening" aria-labelledby="opening-title">
+    <div class="opening__image" aria-hidden="true"></div>
+    <div class="opening__veil"></div>
+    <div class="opening__content">
+      <p class="eyebrow">Mis XV años</p>
+      <h1 id="opening-title">Ana <em>Isabela</em></h1>
+      <p class="opening__date">4 · octubre · 2026</p>
+      <button class="button button--light" id="open-invitation" type="button">Abrir invitación</button>
+    </div>
+  </section>
+
+  <button class="music-control" id="music-control" type="button" aria-label="Reproducir música" aria-pressed="false">
+    <span class="music-control__icon" aria-hidden="true">♫</span>
+    <span class="music-control__label">Música</span>
+  </button>
+  <audio id="music" preload="none">
+    <source src="assets/audio/track.mp3" type="audio/mpeg">
+  </audio>
+
+  <main id="contenido">
+    <header class="hero" aria-labelledby="hero-title">
+      <picture class="hero__media">
+        <source media="(min-width: 760px)" srcset="assets/images/ana-isabela-7426-1400.jpg 1400w, assets/images/ana-isabela-7426-900.jpg 900w" sizes="100vw">
+        <img src="assets/images/ana-isabela-7426-900.jpg" width="600" height="900" alt="Ana Isabela sonríe con un vestido rosa" fetchpriority="high">
+      </picture>
+      <div class="hero__shade"></div>
+      <div class="hero__content">
+        <p class="eyebrow">Mis XV años</p>
+        <h2 id="hero-title">Ana <em>Isabela</em></h2>
+        <p class="hero__date"><span>Domingo</span> 4 de octubre de 2026</p>
+      </div>
+      <span class="hero__scroll" aria-hidden="true">Desliza</span>
+    </header>
+
+    <section class="intro section reveal" aria-label="Presentación">
+      <span class="ornament" aria-hidden="true">✦</span>
+      <p class="quote">“Celebramos a Isabela, cuya alegría, inteligencia y esencia vibrante hacen especial cada momento.”</p>
+      <p class="script-word" aria-hidden="true">quince</p>
+    </section>
+
+    <section class="countdown section section--rose" aria-labelledby="countdown-title">
+      <p class="eyebrow">Falta muy poco</p>
+      <h2 id="countdown-title">Cuenta regresiva</h2>
+      <div class="countdown__grid" id="countdown" role="timer" aria-live="polite">
+        <div><strong data-days>00</strong><span>Días</span></div>
+        <div><strong data-hours>00</strong><span>Horas</span></div>
+        <div><strong data-minutes>00</strong><span>Minutos</span></div>
+        <div><strong data-seconds>00</strong><span>Segundos</span></div>
+      </div>
+      <p class="countdown__finished" id="countdown-finished" hidden>¡Hoy celebramos los XV años de Ana Isa!</p>
+    </section>
+
+    <section class="family section reveal" aria-labelledby="family-title">
+      <p class="eyebrow">Con la bendición de</p>
+      <h2 id="family-title">Nuestra familia</h2>
+      <div class="family__grid">
+        <article>
+          <span>Sus padres</span>
+          <h3>Edna Enciso Villa</h3>
+          <i aria-hidden="true">&amp;</i>
+          <h3>Juan Carlos Nieves Torres</h3>
+        </article>
+        <article>
+          <span>Sus padrinos</span>
+          <h3>Alma Nelly Enciso Villa</h3>
+          <i aria-hidden="true">&amp;</i>
+          <h3>Inocencio Menéndez Reyes</h3>
+        </article>
+      </div>
+    </section>
+
+    <section class="photo-break reveal" aria-label="Retrato de Ana Isa">
+      <picture>
+        <source srcset="assets/images/ana-isabela-7422-1800.jpg 1800w, assets/images/ana-isabela-7422-900.jpg 900w" sizes="100vw">
+        <img src="assets/images/ana-isabela-7422-900.jpg" width="900" height="600" alt="Retrato de Ana Isa junto a un ventanal" loading="lazy">
+      </picture>
+      <p>Una noche<br><em>para recordar</em></p>
+    </section>
+
+    <section class="events section" aria-labelledby="events-title">
+      <p class="eyebrow">Celebremos juntos</p>
+      <h2 id="events-title">Los detalles</h2>
+      <div class="events__grid">
+        <article class="event-card reveal">
+          <span class="event-card__number">01</span>
+          <p class="eyebrow">Misa de acción de gracias</p>
+          <h3>Parroquia de Nuestra Señora del Perpetuo Socorro</h3>
+          <p class="event-card__time">5:00 <small>p. m.</small></p>
+          <p>Puente de Alvarado, esquina con Tabaqueros y Seminario, colonia Carretas.</p>
+          <a class="button" href="https://maps.app.goo.gl/yqNTZgW9uhAusq35A" target="_blank" rel="noopener noreferrer">Abrir en Google Maps</a>
+        </article>
+        <article class="event-card reveal">
+          <span class="event-card__number">02</span>
+          <p class="eyebrow">Recepción</p>
+          <h3>Salón VillaCONIN<br><em>Solar de Conín</em></h3>
+          <p class="event-card__time">7:00 <small>p. m.</small></p>
+          <p>Te esperamos para compartir una noche inolvidable.</p>
+          <a class="button" href="https://maps.app.goo.gl/fpPS3DihsY5NpiEg8" target="_blank" rel="noopener noreferrer">Abrir en Google Maps</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="notes section section--dark" aria-label="Indicaciones">
+      <div class="notes__grid">
+        <article class="reveal">
+          <span class="notes__icon" aria-hidden="true">◇</span>
+          <p class="eyebrow">Código de vestimenta</p>
+          <h2>Vestimenta formal</h2>
+          <p>Hombres: traje.<br>Mujeres: vestido largo de noche.</p>
+          <p class="notes__accent">El color rosa está reservado para la quinceañera.</p>
+        </article>
+        <article class="reveal">
+          <span class="notes__icon" aria-hidden="true">✦</span>
+          <p class="eyebrow">Una celebración especial</p>
+          <h2>Evento exclusivo para adultos</h2>
+          <p>Para disfrutar plenamente esta celebración, hemos preparado un evento exclusivo para adultos.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="gallery section" aria-labelledby="gallery-title">
+      <p class="eyebrow">Momentos</p>
+      <h2 id="gallery-title">Ana Isa</h2>
+      <div class="gallery__grid">
+        <figure class="gallery__wide reveal"><img src="assets/images/ana-isabela-7445-1800.jpg" srcset="assets/images/ana-isabela-7445-900.jpg 900w, assets/images/ana-isabela-7445-1800.jpg 1800w" sizes="(min-width: 760px) 66vw, 100vw" width="900" height="600" alt="Ana Isa sonríe en una terraza" loading="lazy"></figure>
+        <figure class="gallery__tall reveal"><img src="assets/images/ana-isabela-7426-900.jpg" width="600" height="900" alt="Retrato vertical de Ana Isa" loading="lazy"></figure>
+        <figure class="reveal"><img src="assets/images/ana-isabela-7585-1800.jpg" srcset="assets/images/ana-isabela-7585-900.jpg 900w, assets/images/ana-isabela-7585-1800.jpg 1800w" sizes="(min-width: 760px) 50vw, 100vw" width="900" height="600" alt="Ana Isa sentada en una banca junto a su mascota" loading="lazy"></figure>
+        <figure class="reveal"><img src="assets/images/ana-isabela-7503-1800.jpg" srcset="assets/images/ana-isabela-7503-900.jpg 900w, assets/images/ana-isabela-7503-1800.jpg 1800w" sizes="(min-width: 760px) 50vw, 100vw" width="900" height="600" alt="Ana Isa acompañada de su familia" loading="lazy"></figure>
+      </div>
+    </section>
+
+    <section class="rsvp section section--rose" aria-labelledby="rsvp-title">
+      <span class="ornament" aria-hidden="true">✦</span>
+      <p class="eyebrow">Nos encantará verte</p>
+      <h2 id="rsvp-title">Confirma tu asistencia</h2>
+      <div class="guest-message" id="guest-message" hidden>
+        <p>Invitación para</p>
+        <strong data-guest-name></strong>
+        <span data-guest-seats></span>
+      </div>
+      <p>Confirma tu asistencia antes del<br><strong>14 de septiembre de 2026.</strong></p>
+      <a class="button button--whatsapp" id="whatsapp-link" href="https://wa.me/524421864483?text=Hola%2C%20deseo%20confirmar%20mi%20asistencia%20a%20los%20XV%20a%C3%B1os%20de%20Ana%20Isa.%20Mi%20nombre%20es%20______%20y%20asistir%C3%A1n%20______%20personas." target="_blank" rel="noopener noreferrer">Confirmar por WhatsApp</a>
+    </section>
+
+    <footer class="closing">
+      <picture class="closing__media">
+        <source srcset="assets/images/ana-isabela-7445-1800.jpg 1800w, assets/images/ana-isabela-7445-900.jpg 900w" sizes="100vw">
+        <img src="assets/images/ana-isabela-7445-900.jpg" width="900" height="600" alt="Ana Isa sonríe" loading="lazy">
+      </picture>
+      <div class="closing__shade"></div>
+      <div class="closing__content reveal">
+        <p>Gracias por acompañarme en este momento tan especial.</p>
+        <h2>Será una alegría<br><em>compartirlo contigo.</em></h2>
+        <span>Ana Isa · XV</span>
+      </div>
+    </footer>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="guest.js" defer></script>
+  <script src="script.js" defer></script>
+</body>
+</html>
