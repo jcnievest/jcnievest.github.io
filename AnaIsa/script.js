@@ -4,58 +4,14 @@
   const body = document.body;
   const opening = document.getElementById('opening');
   const openButton = document.getElementById('open-invitation');
-  const musicButton = document.getElementById('music-control');
-  const music = document.getElementById('music');
-  const toast = document.getElementById('toast');
-  let toastTimer;
-  let musicAvailable = true;
-
   body.classList.add('is-locked');
-
-  function showToast(message) {
-    toast.textContent = message;
-    toast.classList.add('is-visible');
-    window.clearTimeout(toastTimer);
-    toastTimer = window.setTimeout(() => toast.classList.remove('is-visible'), 3200);
-  }
 
   openButton.addEventListener('click', () => {
     opening.classList.add('is-hidden');
     body.classList.remove('is-locked');
-    musicButton.focus({ preventScroll: true });
   });
 
-  music.addEventListener('error', () => {
-    musicAvailable = false;
-    musicButton.classList.remove('is-playing');
-    musicButton.setAttribute('aria-pressed', 'false');
-    musicButton.querySelector('.music-control__label').textContent = 'Música pendiente';
-  });
-
-  musicButton.addEventListener('click', async () => {
-    if (!musicAvailable || music.networkState === HTMLMediaElement.NETWORK_NO_SOURCE) {
-      showToast('La pista autorizada se agregará próximamente.');
-      return;
-    }
-    if (music.paused) {
-      try {
-        await music.play();
-        musicButton.classList.add('is-playing');
-        musicButton.setAttribute('aria-pressed', 'true');
-        musicButton.setAttribute('aria-label', 'Pausar música');
-      } catch (_) {
-        musicAvailable = false;
-        showToast('La pista autorizada se agregará próximamente.');
-      }
-    } else {
-      music.pause();
-      musicButton.classList.remove('is-playing');
-      musicButton.setAttribute('aria-pressed', 'false');
-      musicButton.setAttribute('aria-label', 'Reproducir música');
-    }
-  });
-
-  const target = new Date('2026-10-04T00:00:00-06:00').getTime();
+  const target = new Date('2026-10-03T17:00:00-06:00').getTime();
   const countdown = document.getElementById('countdown');
   const finished = document.getElementById('countdown-finished');
   const fields = {

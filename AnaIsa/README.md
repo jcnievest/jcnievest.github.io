@@ -1,20 +1,16 @@
 # Invitación XV — Ana Isabela
 
-Primera versión funcional para la ruta `/AnaIsa/`. Es HTML, CSS y JavaScript puro, compatible con la publicación actual mediante GitHub Pages. No se ha desplegado.
+Invitación editorial para la ruta `/AnaIsa/`. Es HTML, CSS y JavaScript puro, compatible con la publicación actual mediante GitHub Pages.
 
 ## Fotografías
 
-Las cinco fotografías solicitadas se descargaron de la carpeta compartida y se generaron copias optimizadas para web. Los originales permanecen intactos fuera del repositorio. La portada usa `IM_7426.jpg` por su composición vertical, fondo luminoso y buen espacio para texto.
+Las fotografías solicitadas se descargaron de la carpeta compartida y se generaron copias optimizadas para web. Los originales permanecen intactos fuera del repositorio. La portada usa `IM_7380.jpg`.
 
 Las copias de `900` y `1800`/`1400` píxeles están en `assets/images/`. Para sustituir una imagen, conserva los nombres de archivo resultantes o actualiza los `src`/`srcset` en `index.html`.
 
-## Música pendiente
+## Música
 
-No se incluyó música comercial. Cuando exista una pista autorizada, copiarla como:
-
-`assets/audio/track.mp3`
-
-El control sólo intenta reproducir después de una interacción. Si el archivo no existe, la invitación funciona normalmente y el control informa que la pista está pendiente.
+La sección musical integra el reproductor oficial de Apple Music y conserva un enlace alternativo a “La Bella y la Bestia”. No se descarga ni aloja audio comercial.
 
 ## Personalización futura
 

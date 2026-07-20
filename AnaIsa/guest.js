@@ -18,7 +18,7 @@
       : `${guest.lugaresAsignados} lugares reservados`;
     panel.hidden = false;
 
-    const message = `Hola, deseo confirmar mi asistencia a los XV años de Ana Isa. Mi nombre es ${guest.nombreVisible} y asistirán ______ personas.`;
+    const message = `Hola, confirmo mi asistencia a los XV años de Ana Isa. Mi nombre es ${guest.nombreVisible} y confirmo ______ lugares de los ${guest.lugaresAsignados} que tenemos reservados.`;
     document.getElementById('whatsapp-link').href = `https://wa.me/524421864483?text=${encodeURIComponent(message)}`;
   }
 
