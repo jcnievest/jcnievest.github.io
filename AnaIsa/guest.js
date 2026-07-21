@@ -28,5 +28,7 @@
   }
 
   window.AnaIsaGuest = { token, applyGuest, resolveGuest };
-  if (token) resolveGuest(token).then(applyGuest);
+  if (token) resolveGuest(token).then(applyGuest).catch(function () {
+    // La invitación general continúa disponible si falla la personalización.
+  });
 }());
