@@ -3,16 +3,18 @@
 
   const root = document.documentElement;
   const body = document.body;
-  const opening = document.getElementById('opening');
-  const openButton = document.getElementById('open-invitation');
+  const openButtons = document.querySelectorAll('#open-invitation');
 
   try {
     root.classList.replace('no-js', 'js');
-    if (opening && openButton) {
+    if (openButtons.length) {
       body.classList.add('is-locked');
-      openButton.addEventListener('click', function () {
-        opening.classList.add('is-hidden');
-        body.classList.remove('is-locked');
+      openButtons.forEach(function (openButton) {
+        openButton.addEventListener('click', function () {
+          const opening = openButton.closest('.opening');
+          if (opening) opening.classList.add('is-hidden');
+          body.classList.remove('is-locked');
+        });
       });
     }
   } catch (error) {
