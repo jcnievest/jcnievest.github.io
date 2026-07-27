@@ -1,0 +1,8 @@
+name = "ana-isa-rsvp"
+main = "index.js"
+compatibility_date = "2026-07-26"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "ana-isa-rsvp"
+database_id = "fe67e317-9cff-4a7a-9743-8b697056b555"
