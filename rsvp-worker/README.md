@@ -17,3 +17,6 @@ Backend previsto para Cloudflare Workers + D1.
 4. Desplegar el Worker.
 5. Asociar el dominio personalizado `rsvp.juancarlosnieves.mx`.
 
+
+
+Deployment trigger: 2026-07-27.
