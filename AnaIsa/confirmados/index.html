@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="es" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Confirmados · Ana Isabela</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;1,6..96,400&family=Manrope:wght@300;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="admin-page">
+  <main class="admin-shell">
+    <header class="admin-header">
+      <p class="eyebrow">Ana Isa · Mis XV años</p>
+      <h1>Lista de<br><em>confirmados</em></h1>
+      <p>Panel privado de confirmaciones.</p>
+    </header>
+
+    <section class="admin-login" id="admin-login" aria-labelledby="login-title">
+      <h2 id="login-title">Acceso</h2>
+      <form id="admin-login-form">
+        <label class="rsvp-field">
+          <span>Clave de administración</span>
+          <input type="password" id="admin-token" autocomplete="current-password" required>
+        </label>
+        <p class="admin-status" id="admin-login-status" role="status"></p>
+        <button class="button button--dark" type="submit">Ver confirmados</button>
+      </form>
+    </section>
+
+    <section class="admin-dashboard" id="admin-dashboard" hidden>
+      <div class="admin-totals">
+        <article><span>Confirmaciones</span><strong id="total-confirmations">0</strong></article>
+        <article><span>Personas confirmadas</span><strong id="total-people">0</strong></article>
+      </div>
+      <div class="admin-actions">
+        <button class="button" id="refresh-list" type="button">Actualizar lista</button>
+        <button class="button" id="close-session" type="button">Cerrar sesión</button>
+      </div>
+      <p class="admin-status" id="admin-status" role="status"></p>
+      <div class="admin-table-wrap">
+        <table>
+          <thead><tr><th>Nombre</th><th>Personas</th><th>Celular</th><th>Confirmado</th></tr></thead>
+          <tbody id="rsvp-list"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+  <script src="script.js" defer></script>
+</body>
+</html>
+
