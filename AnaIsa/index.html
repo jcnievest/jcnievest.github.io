@@ -184,7 +184,38 @@
         <p>Invitación para</p><strong data-guest-name></strong><span data-guest-seats></span>
       </div>
       <p class="rsvp__deadline">Confirma tu asistencia antes del<br><strong>14 de septiembre de 2026</strong></p>
-      <a class="button button--dark" id="whatsapp-link" href="https://wa.me/524421864483?text=Hola%2C%20deseo%20confirmar%20mi%20asistencia%20a%20los%20XV%20a%C3%B1os%20de%20Ana%20Isa.%20Mi%20nombre%20es%20______%20y%20asistir%C3%A1n%20______%20personas." target="_blank" rel="noopener noreferrer">Confirmar por WhatsApp</a>
+      <form class="rsvp-form reveal" id="rsvp-form" novalidate>
+        <div class="rsvp-form__grid">
+          <label class="rsvp-field">
+            <span>Nombre completo</span>
+            <input type="text" name="name" autocomplete="name" maxlength="100" required>
+          </label>
+          <label class="rsvp-field">
+            <span>Número de personas</span>
+            <input type="number" name="partySize" inputmode="numeric" min="1" max="20" required>
+          </label>
+          <label class="rsvp-field rsvp-field--wide">
+            <span>Número de celular</span>
+            <input type="tel" name="phone" autocomplete="tel" inputmode="tel" maxlength="20" placeholder="442 000 0000" required>
+          </label>
+        </div>
+        <label class="rsvp-check">
+          <input type="checkbox" name="confirmed" value="true" required>
+          <span>Confirmo mi asistencia a los XV años de Ana Isa.</span>
+        </label>
+        <label class="rsvp-honeypot" aria-hidden="true">
+          Sitio web
+          <input type="text" name="website" tabindex="-1" autocomplete="off">
+        </label>
+        <p class="rsvp-form__status" id="rsvp-status" role="status" aria-live="polite"></p>
+        <button class="button button--dark" id="rsvp-submit" type="submit">Enviar confirmación</button>
+      </form>
+      <div class="rsvp-success" id="rsvp-success" hidden>
+        <p class="eyebrow">Confirmación registrada</p>
+        <h3>Gracias por acompañarnos.</h3>
+        <p>Tu respuesta quedó guardada. Si lo deseas, también puedes avisarnos por WhatsApp.</p>
+        <a class="button button--dark" id="whatsapp-link" href="#" target="_blank" rel="noopener noreferrer">Notificar por WhatsApp</a>
+      </div>
     </section>
 
     <footer class="closing">
@@ -199,6 +230,6 @@
   </main>
 
     <script src="guest.js?v=20260720-mobile" defer></script>
-    <script src="script.js?v=20260726-open-fix" defer></script>
+    <script src="script.js?v=20260726-rsvp-form" defer></script>
 </body>
 </html>

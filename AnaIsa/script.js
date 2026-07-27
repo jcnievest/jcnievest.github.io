@@ -64,6 +64,61 @@
   }
 
   try {
+    const rsvpForm = document.getElementById('rsvp-form');
+    const rsvpStatus = document.getElementById('rsvp-status');
+    const rsvpSuccess = document.getElementById('rsvp-success');
+    const whatsappLink = document.getElementById('whatsapp-link');
+    const rsvpEndpoint = 'https://rsvp.juancarlosnieves.mx/api/rsvp';
+
+    if (rsvpForm && rsvpStatus && rsvpSuccess && whatsappLink) {
+      rsvpForm.addEventListener('submit', async function (event) {
+        event.preventDefault();
+        rsvpStatus.textContent = '';
+
+        if (!rsvpForm.checkValidity()) {
+          rsvpForm.reportValidity();
+          return;
+        }
+
+        const data = new FormData(rsvpForm);
+        const payload = {
+          name: String(data.get('name') || '').trim(),
+          partySize: Number(data.get('partySize')),
+          phone: String(data.get('phone') || '').trim(),
+          confirmed: data.get('confirmed') === 'true',
+          website: String(data.get('website') || ''),
+          invitationToken: window.AnaIsaGuest ? window.AnaIsaGuest.token : null
+        };
+
+        rsvpForm.classList.add('is-sending');
+        rsvpStatus.textContent = 'Guardando tu confirmación…';
+
+        try {
+          const response = await fetch(rsvpEndpoint, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+          const result = await response.json().catch(function () { return {}; });
+          if (!response.ok) throw new Error(result.message || 'No fue posible guardar la confirmación.');
+
+          const whatsappMessage = `Hola, les aviso que ya registré mi confirmación para los XV años de Ana Isa. Nombre: ${payload.name}. Asistiremos: ${payload.partySize} persona${payload.partySize === 1 ? '' : 's'}.`;
+          whatsappLink.href = `https://wa.me/524421864483?text=${encodeURIComponent(whatsappMessage)}`;
+          rsvpForm.hidden = true;
+          rsvpSuccess.hidden = false;
+          rsvpSuccess.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        } catch (error) {
+          rsvpStatus.textContent = error.message || 'Ocurrió un problema. Intenta nuevamente.';
+        } finally {
+          rsvpForm.classList.remove('is-sending');
+        }
+      });
+    }
+  } catch (error) {
+    // El formulario permanece visible si el navegador no admite alguna función.
+  }
+
+  try {
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const reveals = document.querySelectorAll('.reveal');
     root.classList.add('reveal-ready');
