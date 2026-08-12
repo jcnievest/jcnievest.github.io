@@ -19,14 +19,29 @@
     }).format(new Date(value));
   }
 
+  function registrationNumbers(items) {
+    const ordered = items.slice().sort(function (a, b) {
+      const dateDifference = new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+      if (dateDifference !== 0) return dateDifference;
+      return String(a.id || a.phone).localeCompare(String(b.id || b.phone));
+    });
+    const numbers = new Map();
+    ordered.forEach(function (item, index) {
+      numbers.set(item.id || item.phone, index + 1);
+    });
+    return numbers;
+  }
+
   function render(data) {
+    const rsvps = data.rsvps || [];
+    const numbers = registrationNumbers(rsvps);
     totalConfirmations.textContent = String(data.totalConfirmations || 0);
     totalPeople.textContent = String(data.totalPeople || 0);
     list.replaceChildren();
 
-    (data.rsvps || []).forEach(function (item, index) {
+    rsvps.forEach(function (item) {
       const row = document.createElement('tr');
-      [String(index + 1), item.name, String(item.partySize), item.phone, formatDate(item.updatedAt)].forEach(function (value) {
+      [String(numbers.get(item.id || item.phone)), item.name, String(item.partySize), item.phone, formatDate(item.updatedAt)].forEach(function (value) {
         const cell = document.createElement('td');
         cell.textContent = value;
         row.appendChild(cell);

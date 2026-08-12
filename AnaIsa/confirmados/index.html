@@ -94,15 +94,29 @@
           .replace(/'/g, '&apos;');
       }
 
+      function registrationNumbers(items) {
+        const ordered = items.slice().sort(function (a, b) {
+          const dateDifference = new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+          if (dateDifference !== 0) return dateDifference;
+          return String(a.id || a.phone).localeCompare(String(b.id || b.phone));
+        });
+        const numbers = new Map();
+        ordered.forEach(function (item, index) {
+          numbers.set(item.id || item.phone, index + 1);
+        });
+        return numbers;
+      }
+
       function render(data) {
         currentRsvps = data.rsvps || [];
+        const numbers = registrationNumbers(currentRsvps);
         document.getElementById('total-confirmations').textContent = String(data.totalConfirmations || 0);
         document.getElementById('total-people').textContent = String(data.totalPeople || 0);
         downloadExcel.disabled = currentRsvps.length === 0;
         list.replaceChildren();
-        currentRsvps.forEach(function (item, index) {
+        currentRsvps.forEach(function (item) {
           const row = document.createElement('tr');
-          [String(index + 1), item.name, String(item.partySize), item.phone, formatDate(item.updatedAt, false)]
+          [String(numbers.get(item.id || item.phone)), item.name, String(item.partySize), item.phone, formatDate(item.updatedAt, false)]
             .forEach(function (value) {
               const cell = document.createElement('td');
               cell.textContent = value;
@@ -133,9 +147,10 @@
 
       function downloadAsExcel() {
         if (!currentRsvps.length) return;
-        const rows = currentRsvps.map(function (item, index) {
+        const numbers = registrationNumbers(currentRsvps);
+        const rows = currentRsvps.map(function (item) {
           return '<Row>' +
-            '<Cell><Data ss:Type="Number">' + (index + 1) + '</Data></Cell>' +
+            '<Cell><Data ss:Type="Number">' + numbers.get(item.id || item.phone) + '</Data></Cell>' +
             '<Cell><Data ss:Type="String">' + escapeXml(item.name) + '</Data></Cell>' +
             '<Cell><Data ss:Type="Number">' + Number(item.partySize) + '</Data></Cell>' +
             '<Cell><Data ss:Type="String">' + escapeXml(item.phone) + '</Data></Cell>' +
