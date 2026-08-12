@@ -10,7 +10,11 @@
   const list = document.getElementById('rsvp-list');
   const totalConfirmations = document.getElementById('total-confirmations');
   const totalPeople = document.getElementById('total-people');
+  const numberHeading = document.getElementById('number-heading');
+  const sortIndicator = document.getElementById('sort-indicator');
   let token = '';
+  let currentRsvps = [];
+  let sortDirection = 'desc';
 
   function formatDate(value) {
     return new Intl.DateTimeFormat('es-MX', {
@@ -32,12 +36,27 @@
     return numbers;
   }
 
+  function orderedRsvps(items, numbers) {
+    const direction = sortDirection === 'asc' ? 1 : -1;
+    return items.slice().sort(function (a, b) {
+      return (numbers.get(a.id || a.phone) - numbers.get(b.id || b.phone)) * direction;
+    });
+  }
+
+  function updateSortControl() {
+    const ascending = sortDirection === 'asc';
+    numberHeading.setAttribute('aria-sort', ascending ? 'ascending' : 'descending');
+    sortIndicator.textContent = ascending ? '↑' : '↓';
+  }
+
   function render(data) {
-    const rsvps = data.rsvps || [];
-    const numbers = registrationNumbers(rsvps);
+    currentRsvps = data.rsvps || [];
+    const numbers = registrationNumbers(currentRsvps);
+    const rsvps = orderedRsvps(currentRsvps, numbers);
     totalConfirmations.textContent = String(data.totalConfirmations || 0);
     totalPeople.textContent = String(data.totalPeople || 0);
     list.replaceChildren();
+    updateSortControl();
 
     rsvps.forEach(function (item) {
       const row = document.createElement('tr');
@@ -87,6 +106,15 @@
 
   document.getElementById('refresh-list').addEventListener('click', function () {
     loadRsvps().catch(function (error) { status.textContent = error.message; });
+  });
+
+  document.getElementById('sort-by-number').addEventListener('click', function () {
+    sortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
+    render({
+      rsvps: currentRsvps,
+      totalConfirmations: currentRsvps.length,
+      totalPeople: currentRsvps.reduce(function (sum, item) { return sum + Number(item.partySize || 0); }, 0)
+    });
   });
 
   document.getElementById('close-session').addEventListener('click', function () {

@@ -16,6 +16,9 @@
     .admin-table-wrap th:nth-child(3),
     .admin-table-wrap td:nth-child(3) { text-align: center; }
     .admin-table-wrap td:nth-child(2) { text-align: left; }
+    .admin-sort { display: inline-flex; align-items: center; gap: .35rem; padding: 0; border: 0; background: transparent; color: inherit; font: inherit; letter-spacing: inherit; text-transform: inherit; cursor: pointer; }
+    .admin-sort:focus-visible { outline: 2px solid var(--gold); outline-offset: .3rem; }
+    .admin-sort__indicator { font-size: .85rem; }
   </style>
 </head>
 <body class="admin-page">
@@ -51,7 +54,7 @@
       <p class="admin-status" id="admin-status" role="status"></p>
       <div class="admin-table-wrap">
         <table>
-          <thead><tr><th scope="col">N.º</th><th scope="col">Nombre</th><th scope="col">Personas</th><th scope="col">Celular</th><th scope="col">Confirmado</th></tr></thead>
+          <thead><tr><th scope="col" id="number-heading" aria-sort="descending"><button class="admin-sort" id="sort-by-number" type="button">N.º <span class="admin-sort__indicator" id="sort-indicator" aria-hidden="true">↓</span></button></th><th scope="col">Nombre</th><th scope="col">Personas</th><th scope="col">Celular</th><th scope="col">Confirmado</th></tr></thead>
           <tbody id="rsvp-list"></tbody>
         </table>
       </div>
@@ -68,8 +71,11 @@
       const status = document.getElementById('admin-status');
       const list = document.getElementById('rsvp-list');
       const downloadExcel = document.getElementById('download-excel');
+      const numberHeading = document.getElementById('number-heading');
+      const sortIndicator = document.getElementById('sort-indicator');
       let token = '';
       let currentRsvps = [];
+      let sortDirection = 'desc';
 
       function formatDate(value, includeWeekday) {
         const options = {
@@ -107,14 +113,29 @@
         return numbers;
       }
 
+      function orderedRsvps(items, numbers) {
+        const direction = sortDirection === 'asc' ? 1 : -1;
+        return items.slice().sort(function (a, b) {
+          return (numbers.get(a.id || a.phone) - numbers.get(b.id || b.phone)) * direction;
+        });
+      }
+
+      function updateSortControl() {
+        const ascending = sortDirection === 'asc';
+        numberHeading.setAttribute('aria-sort', ascending ? 'ascending' : 'descending');
+        sortIndicator.textContent = ascending ? '↑' : '↓';
+      }
+
       function render(data) {
         currentRsvps = data.rsvps || [];
         const numbers = registrationNumbers(currentRsvps);
+        const visibleRsvps = orderedRsvps(currentRsvps, numbers);
         document.getElementById('total-confirmations').textContent = String(data.totalConfirmations || 0);
         document.getElementById('total-people').textContent = String(data.totalPeople || 0);
         downloadExcel.disabled = currentRsvps.length === 0;
         list.replaceChildren();
-        currentRsvps.forEach(function (item) {
+        updateSortControl();
+        visibleRsvps.forEach(function (item) {
           const row = document.createElement('tr');
           [String(numbers.get(item.id || item.phone)), item.name, String(item.partySize), item.phone, formatDate(item.updatedAt, false)]
             .forEach(function (value) {
@@ -148,7 +169,7 @@
       function downloadAsExcel() {
         if (!currentRsvps.length) return;
         const numbers = registrationNumbers(currentRsvps);
-        const rows = currentRsvps.map(function (item) {
+        const rows = orderedRsvps(currentRsvps, numbers).map(function (item) {
           return '<Row>' +
             '<Cell><Data ss:Type="Number">' + numbers.get(item.id || item.phone) + '</Data></Cell>' +
             '<Cell><Data ss:Type="String">' + escapeXml(item.name) + '</Data></Cell>' +
@@ -199,6 +220,14 @@
         loadRsvps().catch(function (error) { status.textContent = error.message; });
       });
       downloadExcel.addEventListener('click', downloadAsExcel);
+      document.getElementById('sort-by-number').addEventListener('click', function () {
+        sortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
+        render({
+          rsvps: currentRsvps,
+          totalConfirmations: currentRsvps.length,
+          totalPeople: currentRsvps.reduce(function (sum, item) { return sum + Number(item.partySize || 0); }, 0)
+        });
+      });
       document.getElementById('close-session').addEventListener('click', function () {
         token = '';
         currentRsvps = [];
