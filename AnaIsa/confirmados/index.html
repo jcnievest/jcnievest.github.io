@@ -10,6 +10,13 @@
   <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;1,6..96,400&family=Manrope:wght@300;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../styles.css">
   <link rel="stylesheet" href="styles.css?v=20260729-excel">
+  <style>
+    .admin-table-wrap th:first-child,
+    .admin-table-wrap td:first-child { width: 3.5rem; text-align: center; font-variant-numeric: tabular-nums; }
+    .admin-table-wrap th:nth-child(3),
+    .admin-table-wrap td:nth-child(3) { text-align: center; }
+    .admin-table-wrap td:nth-child(2) { text-align: left; }
+  </style>
 </head>
 <body class="admin-page">
   <main class="admin-shell">
@@ -44,7 +51,7 @@
       <p class="admin-status" id="admin-status" role="status"></p>
       <div class="admin-table-wrap">
         <table>
-          <thead><tr><th>Nombre</th><th>Personas</th><th>Celular</th><th>Confirmado</th></tr></thead>
+          <thead><tr><th scope="col">N.º</th><th scope="col">Nombre</th><th scope="col">Personas</th><th scope="col">Celular</th><th scope="col">Confirmado</th></tr></thead>
           <tbody id="rsvp-list"></tbody>
         </table>
       </div>
@@ -93,9 +100,9 @@
         document.getElementById('total-people').textContent = String(data.totalPeople || 0);
         downloadExcel.disabled = currentRsvps.length === 0;
         list.replaceChildren();
-        currentRsvps.forEach(function (item) {
+        currentRsvps.forEach(function (item, index) {
           const row = document.createElement('tr');
-          [item.name, String(item.partySize), item.phone, formatDate(item.updatedAt, false)]
+          [String(index + 1), item.name, String(item.partySize), item.phone, formatDate(item.updatedAt, false)]
             .forEach(function (value) {
               const cell = document.createElement('td');
               cell.textContent = value;
@@ -106,7 +113,7 @@
         if (!data.rsvps || !data.rsvps.length) {
           const row = document.createElement('tr');
           const cell = document.createElement('td');
-          cell.colSpan = 4;
+          cell.colSpan = 5;
           cell.textContent = 'Aún no hay confirmaciones.';
           row.appendChild(cell);
           list.appendChild(row);
@@ -126,8 +133,9 @@
 
       function downloadAsExcel() {
         if (!currentRsvps.length) return;
-        const rows = currentRsvps.map(function (item) {
+        const rows = currentRsvps.map(function (item, index) {
           return '<Row>' +
+            '<Cell><Data ss:Type="Number">' + (index + 1) + '</Data></Cell>' +
             '<Cell><Data ss:Type="String">' + escapeXml(item.name) + '</Data></Cell>' +
             '<Cell><Data ss:Type="Number">' + Number(item.partySize) + '</Data></Cell>' +
             '<Cell><Data ss:Type="String">' + escapeXml(item.phone) + '</Data></Cell>' +
@@ -140,6 +148,7 @@
           'xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet">' +
           '<Worksheet ss:Name="Confirmados"><Table>' +
           '<Row>' +
+          '<Cell><Data ss:Type="String">N.º</Data></Cell>' +
           '<Cell><Data ss:Type="String">NOMBRE</Data></Cell>' +
           '<Cell><Data ss:Type="String">PERSONAS</Data></Cell>' +
           '<Cell><Data ss:Type="String">CELULAR</Data></Cell>' +

@@ -24,9 +24,9 @@
     totalPeople.textContent = String(data.totalPeople || 0);
     list.replaceChildren();
 
-    (data.rsvps || []).forEach(function (item) {
+    (data.rsvps || []).forEach(function (item, index) {
       const row = document.createElement('tr');
-      [item.name, String(item.partySize), item.phone, formatDate(item.updatedAt)].forEach(function (value) {
+      [String(index + 1), item.name, String(item.partySize), item.phone, formatDate(item.updatedAt)].forEach(function (value) {
         const cell = document.createElement('td');
         cell.textContent = value;
         row.appendChild(cell);
@@ -37,7 +37,7 @@
     if (!data.rsvps || !data.rsvps.length) {
       const row = document.createElement('tr');
       const cell = document.createElement('td');
-      cell.colSpan = 4;
+      cell.colSpan = 5;
       cell.textContent = 'Aún no hay confirmaciones.';
       row.appendChild(cell);
       list.appendChild(row);
@@ -81,4 +81,3 @@
     login.hidden = false;
   });
 }());
-
