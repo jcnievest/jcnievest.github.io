@@ -22,6 +22,15 @@
     .pass-button { min-width: 8rem; padding: .7rem .9rem; border: 1px solid var(--gold); background: transparent; color: inherit; font: 600 .56rem/1.2 var(--sans); letter-spacing: .12em; text-transform: uppercase; cursor: pointer; }
     .pass-button:hover { background: var(--gold); color: var(--paper); }
     .pass-button:disabled { cursor: wait; opacity: .55; }
+    .pass-preview[hidden] { display: none; }
+    .pass-preview { position: fixed; inset: 0; z-index: 1000; display: grid; place-items: center; padding: 1rem; background: rgba(29,25,24,.72); }
+    .pass-preview__panel { position: relative; width: min(540px,100%); max-height: calc(100vh - 2rem); overflow: auto; padding: 1.25rem; background: var(--paper); box-shadow: 0 1.5rem 5rem rgba(0,0,0,.28); }
+    .pass-preview__close { position: absolute; top: .6rem; right: .6rem; z-index: 1; width: 2.5rem; height: 2.5rem; border: 1px solid rgba(25,23,23,.28); border-radius: 50%; background: var(--paper); color: inherit; font-size: 1.4rem; cursor: pointer; }
+    .pass-preview h2 { margin: .4rem 3rem 1rem 0; font: 400 2rem/1 var(--serif); }
+    .pass-preview img { display: block; width: min(100%,360px); margin: 0 auto; border: 1px solid rgba(25,23,23,.14); }
+    .pass-preview__actions { display: grid; gap: .75rem; margin-top: 1.25rem; }
+    .pass-preview__actions .button { width: 100%; margin: 0; }
+    .pass-preview__note { margin: 1rem 0 0; font-size: .72rem; line-height: 1.5; text-align: center; }
   </style>
 </head>
 <body class="admin-page">
@@ -63,6 +72,18 @@
       </div>
     </section>
   </main>
+  <div class="pass-preview" id="pass-preview" role="dialog" aria-modal="true" aria-labelledby="pass-preview-title" hidden>
+    <div class="pass-preview__panel">
+      <button class="pass-preview__close" id="close-pass-preview" type="button" aria-label="Cerrar vista previa">×</button>
+      <h2 id="pass-preview-title">Pase listo para compartir</h2>
+      <img id="pass-preview-image" alt="Vista previa del pase de entrada generado">
+      <div class="pass-preview__actions">
+        <button class="button button--dark" id="save-pass" type="button">Guardar imagen</button>
+        <button class="button" id="share-pass" type="button">Compartir por WhatsApp</button>
+      </div>
+      <p class="pass-preview__note" id="pass-preview-note">En celular podrás elegir WhatsApp desde el menú para compartir.</p>
+    </div>
+  </div>
   <script>
     (function () {
       'use strict';
@@ -76,9 +97,14 @@
       const downloadExcel = document.getElementById('download-excel');
       const numberHeading = document.getElementById('number-heading');
       const sortIndicator = document.getElementById('sort-indicator');
+      const passPreview = document.getElementById('pass-preview');
+      const passPreviewImage = document.getElementById('pass-preview-image');
+      const passPreviewNote = document.getElementById('pass-preview-note');
       let token = '';
       let currentRsvps = [];
       let sortDirection = 'desc';
+      let currentPass = null;
+      let currentPassUrl = '';
 
       function formatDate(value, includeWeekday) {
         const options = {
@@ -239,27 +265,77 @@
         });
       }
 
+      function downloadPass() {
+        if (!currentPass) return;
+        const link = document.createElement('a');
+        link.href = currentPassUrl;
+        link.download = currentPass.file.name;
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+      }
+
+      function whatsappPhone(value) {
+        const digits = String(value || '').replace(/\D/g, '');
+        return digits.length === 10 ? '52' + digits : digits;
+      }
+
+      function closePassPreview() {
+        passPreview.hidden = true;
+        document.body.style.overflow = '';
+        passPreviewImage.removeAttribute('src');
+        if (currentPassUrl) URL.revokeObjectURL(currentPassUrl);
+        currentPassUrl = '';
+        currentPass = null;
+      }
+
+      function showPassPreview(blob, item, number) {
+        if (currentPassUrl) URL.revokeObjectURL(currentPassUrl);
+        const safeName = item.name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+        const fileName = 'pase-ana-isa-' + safeName + '.png';
+        currentPassUrl = URL.createObjectURL(blob);
+        currentPass = {
+          blob: blob,
+          file: new File([blob], fileName, { type: 'image/png' }),
+          item: item,
+          number: number
+        };
+        passPreviewImage.src = currentPassUrl;
+        passPreviewNote.textContent = 'Pase ' + String(number).padStart(3, '0') + ' · ' + item.name;
+        passPreview.hidden = false;
+        document.body.style.overflow = 'hidden';
+        document.getElementById('save-pass').focus();
+      }
+
+      async function sharePass() {
+        if (!currentPass) return;
+        const shareData = {
+          files: [currentPass.file],
+          title: 'Pase de entrada · Ana Isa',
+          text: 'Te compartimos tu pase de entrada para los XV años de Ana Isa.'
+        };
+        try {
+          if (navigator.share && navigator.canShare && navigator.canShare({ files: shareData.files })) {
+            await navigator.share(shareData);
+            return;
+          }
+          downloadPass();
+          const phone = whatsappPhone(currentPass.item.phone);
+          const message = 'Hola, te comparto tu pase de entrada para los XV años de Ana Isa. La imagen se descargó para que puedas adjuntarla en este chat.';
+          window.open('https://wa.me/' + phone + '?text=' + encodeURIComponent(message), '_blank', 'noopener');
+          passPreviewNote.textContent = 'La imagen se guardó. Adjunta el archivo descargado en el chat de WhatsApp que se abrió.';
+        } catch (error) {
+          if (error.name !== 'AbortError') passPreviewNote.textContent = error.message || 'No fue posible compartir el pase.';
+        }
+      }
+
       async function deliverPass(item, number, button) {
         const originalText = button.textContent;
         button.disabled = true;
         button.textContent = 'Generando…';
         try {
           const blob = await createPassBlob(item, number);
-          const safeName = item.name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
-          const fileName = 'pase-ana-isa-' + safeName + '.png';
-          const file = new File([blob], fileName, { type: 'image/png' });
-          if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
-            await navigator.share({ files: [file], title: 'Pase de entrada · Ana Isa', text: 'Te compartimos tu pase de entrada para los XV años de Ana Isa.' });
-          } else {
-            const url = URL.createObjectURL(blob);
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = fileName;
-            document.body.appendChild(link);
-            link.click();
-            link.remove();
-            URL.revokeObjectURL(url);
-          }
+          showPassPreview(blob, item, number);
         } catch (error) {
           if (error.name !== 'AbortError') status.textContent = error.message || 'No fue posible generar el pase.';
         } finally {
@@ -372,6 +448,15 @@
         loadRsvps().catch(function (error) { status.textContent = error.message; });
       });
       downloadExcel.addEventListener('click', downloadAsExcel);
+      document.getElementById('save-pass').addEventListener('click', downloadPass);
+      document.getElementById('share-pass').addEventListener('click', sharePass);
+      document.getElementById('close-pass-preview').addEventListener('click', closePassPreview);
+      passPreview.addEventListener('click', function (event) {
+        if (event.target === passPreview) closePassPreview();
+      });
+      document.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape' && !passPreview.hidden) closePassPreview();
+      });
       document.getElementById('sort-by-number').addEventListener('click', function () {
         sortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
         render({
